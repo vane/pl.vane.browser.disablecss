@@ -23,7 +23,7 @@ removecss.ctrl = {
             removecss.model.messageBus.onMessage.addListener(removecss.ctrl.message.listener);
         },
         listener:function (msg) {
-            //console.log(msg);
+            console.log(msg);
             switch(msg.type){
                 case "extension.state": {
                     removecss.model.isActive = msg.data.active;
@@ -88,6 +88,11 @@ removecss.ctrl = {
         }
     },
     removeElements: function() {
+        if(removecss.model.isActive) {
+            setTimeout(function () {
+                removecss.ctrl.removeElements();
+            }, 5000);
+        }
         if(document && (document.readyState == "complete" || document.readyState == "loaded")) {
             removecss.ctrl.removeAfterLoaded();
         } else {

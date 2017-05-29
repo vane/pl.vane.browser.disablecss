@@ -14,7 +14,7 @@ bground.ctrl = {
         port.onMessage.addListener(bground.ctrl.onMessage);
     },
     onMessage: function (msg) {
-        //console.log(msg);
+        console.log(msg);
         switch (msg.type) {
             case "extension.state": {
                 bground.ctrl.extension.sendFrontend({
