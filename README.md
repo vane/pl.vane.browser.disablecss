@@ -5,6 +5,5 @@
 2. working communication between browser content modifier and background script
 
 ### TODO
-1. fix dynamic remove
-2. fix save url
+1. fix save url
 
