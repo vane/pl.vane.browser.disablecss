@@ -19,10 +19,11 @@ removecss.ctrl = {
             }
             removecss.model.messageBus = browser.runtime.connect({name: "remove.css.winona"});
             removecss.ctrl.message.sendBackend({type: "extension.state"});
+            removecss.ctrl.message.ping(5000);
             removecss.model.messageBus.onMessage.addListener(removecss.ctrl.message.listener);
         },
         listener:function (msg) {
-            console.log(msg);
+            //console.log(msg);
             switch(msg.type){
                 case "extension.state": {
                     removecss.model.isActive = msg.data.active;
@@ -30,19 +31,13 @@ removecss.ctrl = {
                     removecss.model.removeInline = msg.data.inline;
                     removecss.model.cssurl = msg.data.cssurl;
                     if(msg.data.active == "t") {
-                        removecss.ctrl.removeData(false);
-                        window.addEventListener('DOMContentLoaded', function () {
-                            removecss.ctrl.removeData(true);
-                        });
+                        removecss.ctrl.removeElements();
                     }
                     break;
                 }
                 case "extension.active": {
                     if (msg.data == "t") {
-                        removecss.ctrl.removeData(false);
-                        window.addEventListener('DOMContentLoaded', function () {
-                            removecss.ctrl.removeData(true);
-                        });
+                        removecss.ctrl.removeElements();
                     }
                     removecss.model.isActive = msg.data;
                     break;
@@ -51,7 +46,7 @@ removecss.ctrl = {
                     if(msg.data == "remove.inline") {
                         removecss.ctrl.removeInline();
                     } else if (msg.data == 'remove.allcss') {
-                        removecss.ctrl.removeAll();
+                        removecss.ctrl.removeElements();
                     }
                     break;
                 }
@@ -70,15 +65,18 @@ removecss.ctrl = {
                 }
                 case "pong": {
                     // test connection here
-                    setTimeout(function() {
-                        removecss.ctrl.message.sendBackend({type: "ping"});
-                    }, 5000);
+                    removecss.ctrl.message.ping(5000);
                     break;
                 }
                 default: {
                     console.error('Unsupported message type : '+msg.type);
                 }
             }
+        },
+        ping: function(interval) {
+            setTimeout(function() {
+                removecss.ctrl.message.sendBackend({type: "ping"});
+            }, interval);
         },
         sendBackend: function(msg) {
             try {
@@ -89,18 +87,31 @@ removecss.ctrl = {
             }
         }
     },
-    removeData: function(isEvent) {
-        if(isEvent == false) {
-            if(removecss.model.allcss == "t") {
-                removecss.ctrl.removeAll();
-            }
+    removeElements: function() {
+        if(document && (document.readyState == "complete" || document.readyState == "loaded")) {
+            removecss.ctrl.removeAfterLoaded();
         } else {
-            if(removecss.model.removeInline == "t") {
-                removecss.ctrl.removeInline();
+            window.addEventListener('DOMContentLoaded', function () {
+                removecss.ctrl.removeAfterLoaded();
+            });
+        }
+    },
+    removeAfterLoaded: function() {
+        if(removecss.model.allcss == "t") {
+            var elements = document.querySelectorAll('link[rel=stylesheet]');
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].parentNode.removeChild(elements[i]);
             }
-            if(removecss.model.cssurl != null) {
-                removecss.ctrl.applyStyle();
-            }
+            [].slice.call(document.getElementsByTagName('style')).forEach(function(el) {
+                el.parentNode.removeChild(el);
+            });
+            removecss.ctrl.removeInline();
+        }
+        if(removecss.model.removeInline == "t") {
+            removecss.ctrl.removeInline();
+        }
+        if(removecss.model.cssurl != null) {
+            removecss.ctrl.applyStyle();
         }
     },
     applyStyle: function() {
@@ -125,20 +136,9 @@ removecss.ctrl = {
     removeInline: function() {
         [].slice.call(document.getElementsByTagName('*')).forEach(function (el) {
             el.style = "";
-            // TODO restore state
             if(el.hasAttribute("bgColor")) {
                 el.removeAttribute("bgColor");
             }
-        });
-    },
-    removeAll: function() {
-        // TODO restore state
-        var elements = document.querySelectorAll('link[rel=stylesheet]');
-        for (var i = 0; i < elements.length; i++) {
-            elements[i].parentNode.removeChild(elements[i]);
-        }
-        [].slice.call(document.getElementsByTagName('style')).forEach(function(el) {
-            el.parentNode.removeChild(el);
         });
     }
 }
