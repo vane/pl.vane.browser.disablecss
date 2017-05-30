@@ -8,6 +8,8 @@
 
 ### TODO
 1. fix save url
-2. add edge support
+2. add m$ edge support
 3. add universal style
+4. expert mode  
+    4.1. add on/off css list instead of one input
 
