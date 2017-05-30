@@ -83,7 +83,7 @@ removecss.ctrl = {
                 removecss.model.messageBus.postMessage(msg);
             } catch(err) {
                 console.error(err);
-                removecss.model.messageBus.init();
+                removecss.ctrl.message.init();
             }
         }
     },
