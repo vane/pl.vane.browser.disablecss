@@ -1,11 +1,12 @@
 iconstate = {}
 
 iconstate.ctrl = {
-    onActivate: function (tab) {
+    onActivate: function (e) {
         var state = iconstate.ctrl.extension.isActive();
         if (state == "t") {
             iconstate.ctrl.extension.deactivate();
         } else {
+
             iconstate.ctrl.extension.activate();
         }
     },
@@ -23,8 +24,10 @@ iconstate.ctrl = {
         if(state == "t") {
             btn.innerHTML = "Dectivate";
             img.src = "icons/48x48.png";
+            btn.className = "btn btn_active";
         } else {
             btn.innerHTML = "Activate";
+            btn.className = "btn btn_inactive";
             img.src = "icons/48x48.black.png";
         }
     },

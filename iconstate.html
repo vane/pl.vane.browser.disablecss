@@ -4,24 +4,118 @@
     <meta charset="UTF-8">
     <title>Remove css from website.</title>
     <style type="text/css">
+        html {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        body {
+            margin: 0 auto;
+            overflow: auto;
+            background-color: #000000;
+            color: #ffffff;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: rgba(255,0,0,.1);
+        }
+        input:focus {
+            outline: 0;
+        }
+        button:focus {
+            outline:0;
+        }
+        ::-webkit-input-placeholder {
+            color: #ffefaf;
+        }
+        ::-moz-placeholder {
+            color: #ffefaf;
+        }
+        :-ms-input-placeholder {
+            color: #ffefaf;
+        }
+        ::placeholder {
+            color: #ffefaf;
+        }
+        ::-moz-selection {
+            background: #999999; /* WebKit/Blink Browsers */
+        }
+        ::selection {
+            background: #999999; /* WebKit/Blink Browsers */
+        }
         .btn {
             margin:0 0 5px;
+            font-size: 12px;
+            width: 100px;
+            height: 20px;
+            text-align: center;
+            background-color: #000000;
+            color: #ffffff;
+            border: dashed 1px;
+            border-radius: 0;
+            border-color: #ffffff;
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+        }
+
+        .btn:focus {
+            border: dashed 1px;
+        }
+
+        .btn_inactive {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        
+        .btn_inactive:hover {
+            background-color: #999999;
+            color: #000000;
+            border-color: #000000;
+        }
+
+        .btn_active {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .btn_active:hover {
+            background-color: #999999;
+            color: #ffffff;
+        }
+
+        .active_span {
+            font-size: 16px;
+        }
+
+        .txt_in {
+            background-color: #ffffff;
+            color: #000000;
+            border: dashed 1px;
+            border-radius: 0px;
+            width: 200px;
         }
     </style>
     <script type="text/javascript" src="icon.state.js"></script>
 </head>
 <body>
-<div style="width:200px;">
+<div style="width:320px;margin-left: 10px;">
     <img id="active_icon" src="active.png">
     <hr>
-    <span>Apply on every page : </span><button id="active_btn" class="btn">Siema</button><br />
-    <input id="cssurl_input" type="text" placeholder="Custom css url" />
-    <button id="customcss_btn">Apply</button><br />
-    <input id="removesheets_input" type="checkbox" />
-    <button id="sheets_btn">Remove All</button><br />
-    <input id="removeinline_input" type="checkbox" />
-    <button id="inline_btn">Remove Inline</button><br />
-    <button id="close_btn">Close</button>
+    <span class="active_span">On every page : </span>
+    <button id="active_btn" class="btn btn_active">Siema</button><br />
+    <ul>
+        <input id="removesheets_input" type="checkbox" /><span>Remove all</span>
+        <input id="removeinline_input" type="checkbox" /><span>Remove inline</span>
+        <br/>
+    </ul>
+    <span>css url:</span>
+    <input id="cssurl_input" type="text" placeholder="Custom css url" class="txt_in" />
+
+    <hr>
+    <span class="active_span">Instant :</span>
+    <div>
+        <button id="sheets_btn" class="btn btn_inactive">Remove All</button>
+        <button id="inline_btn" class="btn btn_inactive">Remove Inline</button>
+        <button id="customcss_btn" class="btn btn_inactive">Apply CSS</button><br />
+    </div>
+    <button id="close_btn" class="btn btn_inactive">Close</button>
 </div>
 </body>
 </html>
