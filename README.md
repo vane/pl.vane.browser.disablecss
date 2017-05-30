@@ -10,5 +10,4 @@
 1. fix save url
 2. add edge support
 3. add universal style
-4. nicer gui
 
