@@ -4,10 +4,10 @@ if(typeof browser == "undefined") {
 var removecss = {}
 removecss.model = {
     messageBus: null,
-    isActive: "false",
+    isActive: "f",
     cssurl: '',
-    allcss: "false",
-    removeInline: "false"
+    allcss: "f",
+    removeInline: "f"
 }
 
 removecss.ctrl = {
