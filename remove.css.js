@@ -46,7 +46,7 @@ removecss.ctrl = {
                     if(msg.data == "remove.inline") {
                         removecss.ctrl.removeInline();
                     } else if (msg.data == 'remove.allcss') {
-                        removecss.ctrl.removeElements();
+                        removecss.ctrl.removeAll();
                     }
                     break;
                 }
@@ -103,14 +103,7 @@ removecss.ctrl = {
     },
     removeAfterLoaded: function() {
         if(removecss.model.allcss == "t") {
-            var elements = document.querySelectorAll('link[rel=stylesheet]');
-            for (var i = 0; i < elements.length; i++) {
-                elements[i].parentNode.removeChild(elements[i]);
-            }
-            [].slice.call(document.getElementsByTagName('style')).forEach(function(el) {
-                el.parentNode.removeChild(el);
-            });
-            removecss.ctrl.removeInline();
+            removecss.ctrl.removeAll();
         }
         if(removecss.model.removeInline == "t") {
             removecss.ctrl.removeInline();
@@ -137,6 +130,16 @@ removecss.ctrl = {
         };
         http.open("GET", removecss.model.cssurl, true);
         http.send();
+    },
+    removeAll: function() {
+        var elements = document.querySelectorAll('link[rel=stylesheet]');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].parentNode.removeChild(elements[i]);
+        }
+        [].slice.call(document.getElementsByTagName('style')).forEach(function(el) {
+            el.parentNode.removeChild(el);
+        });
+        removecss.ctrl.removeInline();
     },
     removeInline: function() {
         [].slice.call(document.getElementsByTagName('*')).forEach(function (el) {
