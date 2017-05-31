@@ -1,8 +1,8 @@
 {
   "name": "Remove css from website",
   "short_name": "remove css",
-  "description": "Removes css from website. Remove inline styles, stylesheets, add custom styles.",
-  "version": "0.3.3",
+  "description": "Removes css from website. Remove inline styles, all styles, add custom styles.",
+  "version": "0.3.4",
   "homepage_url": "https://github.com/vane/pl.vane.browser.disablecss",
   "permissions": ["tabs", "storage", "activeTab", "http://*/*", "https://*/*"],
   "icons": {
